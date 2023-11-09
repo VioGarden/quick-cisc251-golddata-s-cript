@@ -75,25 +75,25 @@ iterates through a list of locations
 for each location, each element is compared, the highest level to the deepest level and stored into a hashmap
 repeats for each location. because every element appears with new values once per iteration, values are summe dup
 """
-hashmap1 = defaultdict(list)
+hashmap1 = defaultdict(list) # creates hashmap, key : [two elementlist]
 hh = 0.0
-for h in bin1:
+for h in bin1: # for each location
     hh += 1
-    x = run_basic_program(h)
-    for name, value, target in x:
-        if not hashmap1[name]:
-            hashmap1[name].append(value)
+    x = run_basic_program(h) # acquire array of the differences of each mineral the highest depth and lowest depth
+    for name, value, target in x: # name of mineral, difference, how much exists at the lowest depth
+        if not hashmap1[name]: # if first run through, create the key and the value
+            hashmap1[name].append(value) # 
             hashmap1[name].append(target)
-        else:
-            curr_value = hashmap1[name][0]
-            curr_value += value
-            hashmap1[name][0] = round(curr_value, 3)
-            curr_target = hashmap1[name][1]
-            curr_target += target
-            hashmap1[name][1] = round(curr_target, 3)
+        else: # on 2nd and onward runthroughs
+            curr_value = hashmap1[name][0] # grab stored variation
+            curr_value += value # sum the current variation with it
+            hashmap1[name][0] = round(curr_value, 3) # stuff that back into the hashmap
+            curr_target = hashmap1[name][1] # grab stored mineral amount at deepest location
+            curr_target += target # sum the current mineral amount with it
+            hashmap1[name][1] = round(curr_target, 3) # stuff data back into hashmap
 
-    bin1_list = hashmap1.items()
-    bin1_list_sorted = sorted(bin1_list, key=lambda x: x[0])
+    bin1_list = hashmap1.items() # [(element-solvent1, [sum of variation, sum of element-solvent amount])]
+    bin1_list_sorted = sorted(bin1_list, key=lambda x: x[0]) # sort alphanetically by element
 
 hashmap2 = defaultdict(list)
 ll = 0.0
